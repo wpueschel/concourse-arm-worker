@@ -23,8 +23,8 @@ for i in $RESOURCES; do
 
    # Build the docker images
    docker build -t ${i}-resource \
-      --build-arg base-image=alpine:$ALPINE_BASE_IMAGE_TAG \
-      --build-arg builder-image=golang:$GOLANG_DOCKER_IMAGE_TAG \
+      --build-arg base_image=alpine:$ALPINE_BASE_IMAGE_TAG \
+      --build-arg builder_image=golang:$GOLANG_DOCKER_IMAGE_TAG \
       -f resource-types-tmp/${i}-resource/dockerfiles/alpine/Dockerfile \
       resource-types-tmp/${i}-resource
 
