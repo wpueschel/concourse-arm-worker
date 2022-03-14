@@ -32,5 +32,5 @@ for i in $RESOURCES; do
 
 done
 
-#rm -rf resource-types-tmp
-#docker build -t concourse-arm-worker .
+docker build -t concourse-arm-worker .
+rm -rf resource-types-tmp
