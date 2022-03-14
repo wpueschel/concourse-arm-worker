@@ -1,0 +1,6 @@
+{
+  "type": "docker-image",
+  "version": "1.6.2",
+  "privileged": true,
+  "unique_version_history": false
+}

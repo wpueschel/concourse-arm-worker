@@ -7,19 +7,15 @@ mkdir -p resource-types-tmp
 
 GOLANG_DOCKER_IMAGE_TAG=1.17.8-alpine3.15
 ALPINE_BASE_IMAGE_TAG=3.15.0
-
-# Clone the resources we want to be build into the worker
-git clone --depth 1 --branch v1.5.0 https://github.com/concourse/registry-image-resource.git resource-types-tmp/registry-image-resource
-git clone --depth 1 --branch v1.6.2 https://github.com/concourse/docker-image-resource resource-types-tmp/docker-image-resource
-git clone --depth 1 --branch v1.2.0 https://github.com/concourse/s3-resource.git resource-types-tmp/s3-resource
-git clone --depth 1 --branch v1.14.5  https://github.com/concourse/git-resource.git resource-types-tmp/git-resource
-
-RESOURCES="registry-image docker-image s3 git"
+RESOURCES="$(ls resource-types)"
 
 for i in $RESOURCES; do
 
+   VERSION=$(jq -r .version resource-types/${i}/resource_metadata.json)
+   echo $i $VERSION
+
    # Clone the resources we want to be build into the worker
-   mkdir -p resource-types/$i
+   git clone -c advice.detachedHead=false --depth 1 --branch v${VERSION} https://github.com/concourse/${i}-resource resource-types-tmp/${i}-resource
 
    # Build the docker images
    docker build -t ${i}-resource \

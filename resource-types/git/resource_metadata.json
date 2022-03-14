@@ -1,6 +1,6 @@
 {
-  "type": "registry-image",
-  "version": "1.5.0",
+  "type": "git",
+  "version": "1.14.5",
   "privileged": false,
   "unique_version_history": false
 }
