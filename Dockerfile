@@ -1,13 +1,13 @@
-FROM golang:1.17.8-alpine3.15 as builder
+FROM golang:1.22.1-alpine as builder
 ENV GO111MODULE=on
-ENV CONCOURSE_VERSION=v7.6.0
+ENV CONCOURSE_VERSION=v7.11.2
 ENV GUARDIAN_COMMIT=51480bc73a282c02f827dde4851cc12265774272
-ENV CNI_PLUGINS_VERSION=v0.8.6
+ENV CNI_PLUGINS_VERSION=v1.4.1 
 RUN apk add gcc git g++
 
 RUN git clone https://github.com/cloudfoundry/guardian.git /go/guardian
 WORKDIR /go/guardian
-RUN git checkout $GUARDIAN_COMMIT
+#RUN git checkout $GUARDIAN_COMMIT
 RUN go build -ldflags "-extldflags '-static'" -mod=vendor -o gdn ./cmd/gdn
 WORKDIR /go/guardian/cmd/init
 RUN gcc -static -o init init.c ignore_sigchild.c
@@ -48,6 +48,6 @@ RUN apt-get update && apt-get install -y \
 
 STOPSIGNAL SIGUSR2
 
-ADD https://raw.githubusercontent.com/concourse/concourse-docker/486894e6d6f84aad112c14094bca18bec8c48154/entrypoint.sh /usr/local/bin/
+ADD https://raw.githubusercontent.com/concourse/concourse-docker/master/entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/entrypoint.sh
 ENTRYPOINT ["dumb-init", "/usr/local/bin/entrypoint.sh"]

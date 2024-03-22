@@ -5,8 +5,8 @@ set -euo pipefail
 cd $(dirname $0)
 mkdir -p resource-types-tmp
 
-GOLANG_DOCKER_IMAGE_TAG=1.17.8-alpine3.15
-ALPINE_BASE_IMAGE_TAG=3.15.0
+GOLANG_DOCKER_IMAGE_TAG=1.22.1-alpine
+ALPINE_BASE_IMAGE_TAG=3.19
 RESOURCES="$(ls resource-types)"
 
 for i in $RESOURCES; do
